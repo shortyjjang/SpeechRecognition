@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Speech Recognition Application
 
-## Getting Started
+이 프로젝트는 음성 인식 기능을 제공하는 React 애플리케이션입니다. 사용자는 마이크 버튼을 클릭하여 음성을 텍스트로 변환할 수 있습니다. 이 애플리케이션은 Web Speech API를 사용하여 음성을 인식합니다.
 
-First, run the development server:
+## 주요 기능
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **음성 인식**: 사용자가 마이크 버튼을 클릭하면 음성 인식이 시작됩니다. 인식된 음성은 실시간으로 텍스트로 변환됩니다.
+- **중간 결과 표시**: 음성 인식 중간 결과를 실시간으로 표시합니다.
+- **오류 처리**: 음성 인식 API가 지원되지 않는 브라우저에서는 오류 메시지를 표시합니다.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 파일 설명
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### `src/app/page.tsx`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **SpeechToText 컴포넌트**: 음성 인식 기능을 제공하는 메인 컴포넌트입니다.
+  - `value`: 입력된 텍스트를 저장합니다.
+  - `voice`: 인식된 음성을 저장합니다.
+  - `isListening`: 현재 음성을 듣고 있는지 여부를 저장합니다.
+  - `handleStopRecording`: 녹음을 중지하고 인식된 음성을 텍스트에 추가합니다.
+  - `useEffect`: `transcript`가 변경될 때마다 `voice`를 업데이트합니다.
 
-## Learn More
+### `src/hooks/useSpeech.ts`
 
-To learn more about Next.js, take a look at the following resources:
+- **useSpeech 훅**: 음성 인식을 관리하는 커스텀 훅입니다.
+  - `isListening`: 현재 듣고 있는지 여부를 저장합니다.
+  - `transcript`: 인식된 텍스트를 저장합니다.
+  - `error`: 오류 메시지를 저장합니다.
+  - `startListening`: 음성 인식을 시작합니다.
+  - `stopListening`: 음성 인식을 중지합니다.
+  - `useEffect`: 음성 인식 API를 초기화하고, 인식 결과를 처리합니다.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### `src/share/SpeechButton.tsx`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **SpeechButton 컴포넌트**: 음성 인식 시작 및 중지 버튼을 제공합니다.
+  - `onClick`: 버튼 클릭 시 호출되는 함수입니다.
+  - `onSpeech`: 음성 인식 결과를 처리하는 콜백 함수입니다.
+  - `onStop`: 음성 인식 중지 시 호출되는 함수입니다.
 
-## Deploy on Vercel
+## 사용 방법
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. 프로젝트를 클론하고 의존성을 설치합니다.
+2. `npm start` 명령어로 애플리케이션을 실행합니다.
+3. 브라우저에서 애플리케이션을 열고 마이크 버튼을 클릭하여 음성을 텍스트로 변환합니다.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 주의 사항
+
+- 이 애플리케이션은 Web Speech API를 사용하므로, 지원되는 브라우저에서만 작동합니다.
+- 브라우저에서 마이크 사용 권한을 허용해야 합니다.
