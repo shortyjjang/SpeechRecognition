@@ -1,4 +1,4 @@
-import { collapseTailwindClassName } from "@/utill/collapseClassName";
+import { collapseTailwindClassName } from "@/utill/collapseTailwindClassName";
 import React from "react";
 
 export default function IconRecord({
